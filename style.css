@@ -80,6 +80,11 @@ html, body, .container {
   button:hover {
     background-color: #e0e0e0;
   }
+
+  .active {
+    background-color: black;
+    color: white;
+  }
   
   .main {
     flex: 60%;
