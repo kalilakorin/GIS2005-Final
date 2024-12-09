@@ -1,84 +1,90 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
 
-    <title>Visualizing Jamestown</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
 
-    <!-- Your styles from style.css -->
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div class="container">
-      <!-- Header -->
-      <div class="header">
-        <h1>Visualize the History of Jamestown, Virginia</h1>
-      </div>
+  <title>Visualizing Jamestown</title>
 
-      <!-- Navigation -->
-      <div class="navigation">
-        <div class="flex-buttons">
-          <button id="historical" onclick="navigateTo('index.html')">Historical Maps</button>
-          <button id="modern" onclick="navigateTo('modern.html')">Modern Maps</button>
-          <button id="archeology" onclick="navigateTo('archeology.html')" class="active">Archeology</button>
-        </div>
-      </div>
+  <!-- Your styles from style.css -->
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
 
-      <!-- Main content -->
-      <div class="content">
-        <div class="left-side">
-          <!-- Map -->
-          <div class="box-upper">
-            <div class="main">
-              <div id="map"><h2>Map archeology</h2></div>
-            </div>
-          </div>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Visualize the History of Jamestown, Virginia</h1>
+    </div>
 
-          <!-- Map info -->
-          <div class="box-lower">
-            <div class="map-info">
-              <h3 id="map-info">This is the archeology page.</h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="right-side">
-          <div class="box-upper">
-            <!-- layers and legend -->
-            <div class="sidebar">
-              <div id="layers">
-                <h2>Layers</h2>
-              </div>
-              <div id="legend">
-                <h2>Legend</h2>
-              </div>
-              <div class="flex-buttons">
-                <button id="inside-button">Inside button</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- attribution -->
-          <div class="box-lower">
-            <div class="sidebar">
-              <h3 id="attribution">Attribution</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="footer">
-        <p>FRCC: GIS 2005 Final GIS Application</p>
+    <!-- Navigation -->
+    <div class="navigation">
+      <div class="flex-buttons">
+        <button id="historical" onclick="navigateTo('index.html')">Historical Maps</button>
+        <button id="modern" onclick="navigateTo('modern.html')">Modern Maps</button>
+        <button id="archeology" onclick="navigateTo('archeology.html')" class="active">Archeology</button>
+        <button id="Flooding" onclick="navigateTo('flood.html')">Flooding</button>
       </div>
     </div>
 
-    <!-- JavaScript imports come after this line -->
+    <!-- Main content -->
+    <div class="content">
+      <div class="left-side">
+        <!-- Map -->
+        <div class="box-upper">
+          <div class="main">
+            <div id="map">
+              <h2>Map archeology</h2>
+            </div>
+          </div>
+        </div>
 
-    <!-- Mapbox GL JS script -->
+        <!-- Map info -->
+        <div class="box-lower">
+          <div class="map-info">
+            <h3 id="map-info">This is the archeology page.</h3>
+          </div>
+        </div>
+      </div>
 
-    <!-- Your JavaScript from script.js-->
-    <script src="script.js"></script>
-  </body>
+      <div class="right-side">
+        <div class="box-upper">
+          <!-- layers and legend -->
+          <div class="sidebar">
+            <div id="layers">
+              <h2>Layers</h2>
+            </div>
+            <div id="legend">
+              <h2>Legend</h2>
+            </div>
+            <div class="flex-buttons">
+              <button id="inside-button">Inside button</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- attribution -->
+        <div class="box-lower">
+          <div class="sidebar">
+            <h3 id="attribution">Attribution</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>FRCC: GIS 2005 Final GIS Application</p>
+    </div>
+  </div>
+
+  <!-- JavaScript imports come after this line -->
+
+  <!-- Mapbox GL JS script -->
+
+  <!-- Your JavaScript from script.js-->
+  <script src="script.js"></script>
+</body>
+
 </html>

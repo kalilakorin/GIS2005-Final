@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Visualizing Jamestown</title>
+
+  <!-- Your styles from style.css -->
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script type="module"
+    src="https://js.arcgis.com/embeddable-components/4.31/arcgis-embeddable-components.esm.js"></script>
+
+  <!-- can delete the below things until the end of head-->
+  <!-- Load Calcite components from CDN -->
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.13.2/calcite.css" />
+  <script type="module" src="https://js.arcgis.com/calcite-components/2.13.2/calcite.esm.js"></script>
+  <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.31/"></script>
+  <!-- Load Map components from CDN-->
+  <script type="module" src="https://js.arcgis.com/map-components/4.31/arcgis-map-components.esm.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Visualize the History of Jamestown, Virginia</h1>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+      <div class="flex-buttons">
+        <button id="historical" onclick="navigateTo('index.html')">
+          Historical Maps
+        </button>
+        <button id="modern" onclick="navigateTo('modern.html')">
+          Modern Maps
+        </button>
+        <button id="archeology" onclick="navigateTo('archeology.html')">
+          Archeology
+        </button>
+        <button id="Flooding" onclick="navigateTo('flood.html')" class="active">
+          Flooding
+        </button>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="left-side">
+        <!-- Map -->
+        <div class="box-upper">
+          <div class="main">
+            <!-- <div id="map"><arcgis-embedded-map style="height:100%;width:100%;" item-id="ff91a98057af4e5a95f4ac0a91146f33" theme="light" portal-url="https://maps.arcgis.com" bookmarks-enabled legend-enabled ></arcgis-embedded-map> -->
+            <!-- <div id="map"><arcgis-embedded-map style="height:100%;width:100%;" item-id="42212e1833bd4bcfb07725b51778d0c5" theme="light" portal-url="https://experience.arcgis.com"></arcgis-embedded-map> -->
+            <!-- <div id="map" src="https://experience.arcgis.com/experience/42212e1833bd4bcfb07725b51778d0c5/page/page_6/?draft=true&org=FRCCBCC"></div>   -->
+            <!-- <div id="map" src="https://fieldmaps.arcgis.app/?itemID=ff91a98057af4e5a95f4ac0a91146f33&referenceContext=open&portalURL=https%3A%2F%2FFRCCBCC.maps.arcgis.com"></div> -->
+            <!-- <div id="map"> -->
+            <!-- <arcgis-map item-id="ff91a98057af4e5a95f4ac0a91146f33">
+                <arcgis-zoom position="top-left"></arcgis-zoom>
+                <arcgis-legend position="bottom-right"></arcgis-legend>
+              </arcgis-map> -->
+            <!-- <style>
+                  .embed-container {
+                    position: flex;
+                    padding-bottom: 80%;
+                    height: 0;
+                    max-width: 100%;
+                  }
+                  /* .embed-container iframe, */
+                  .embed-container object { 
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                  }
+                  .embed-container iframe {
+                    position: relative;
+                    /* top: 0;
+                    left: 0; */
+                    width: 100%;
+                    height: 100%;
+                  }
+                  small {
+                    position: flex;
+                    z-index: 40;
+                    bottom: 0;
+                    margin-bottom: -15px;
+                  }
+                </style>
+                <div class="embed-container">
+                  <iframe
+                    width="500"
+                    height="400"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    title="Historical"
+                    src="//frccbcc.maps.arcgis.com/apps/Embed/index.html?webmap=ff91a98057af4e5a95f4ac0a91146f33&extent=-76.8429,37.1813,-76.6734,37.2467&home=true&zoom=true&previewImage=false&scale=true&legendlayers=true&basemap_toggle=true&alt_basemap=satellite&disable_scroll=false&theme=light"
+                  ></iframe> -->
+            <style>
+              .embed-container {
+                display: flex;
+                flex: auto;
+                position: relative;
+                padding-bottom: 80%;
+                height: 0;
+                max-width: 100%;
+              }
+
+              .embed-container iframe {
+                /* display: flex; */
+                flex: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+              }
+
+              .embed-container object {
+                /* display: flex; */
+                /* flex: auto; */
+                position: absolute;
+                /* top: 0;
+                  left: 0; */
+                width: 100%;
+                height: 100%;
+              }
+
+              small {
+                display: flex;
+                flex: auto;
+                /* position: absolute; */
+                z-index: 40;
+                bottom: 0;
+                margin-bottom: -15px;
+              }
+            </style>
+            <div class="embed-container"><iframe width="100%" height="100%" frameborder="0" scrolling="yes"
+                marginheight="0" marginwidth="0" title="Historical"
+                src="//frccbcc.maps.arcgis.com/apps/Embed/index.html?webmap=ff91a98057af4e5a95f4ac0a91146f33&extent=-76.7981,37.1894,-76.7277,37.2218&home=true&zoom=true&previewImage=false&scale=true&legendlayers=true&basemap_toggle=true&alt_basemap=satellite&disable_scroll=true&theme=light"></iframe>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Map info -->
+      <div class="box-lower">
+        <div class="map-info">
+          <h3 id="map-info">This is the flooding page.</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-side">
+      <div class="box-upper">
+        <!-- layers and legend -->
+        <div class="sidebar">
+          <div id="layers">
+            <h2>Layers</h2>
+          </div>
+          <div id="legend">
+            <h2>Legend</h2>
+          </div>
+          <div class="flex-buttons">
+            <button id="inside-button">Inside button</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- attribution -->
+      <div class="box-lower">
+        <div class="sidebar">
+          <h3 id="attribution">Attribution</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>FRCC: GIS 2005 Final GIS Application</p>
+  </div>
+  </div>
+
+  <!-- Add script to the <head> of your page to load the embeddable map component -->
+
+  <!-- Add custom element to <body> of your page -->
+
+  <!-- Your JavaScript from script.js-->
+  <script src="script.js"></script>
+</body>
+
+</html>

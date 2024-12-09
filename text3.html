@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2x2 Grid with Map</title>
+    <!-- Your styles from style.css -->
+    <link href="style.css" rel="stylesheet" type="text/css" />
+
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.27/"></script>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            /* Center the grid container */
+            align-items: center;
+        }
+
+        /* Flex container (takes up full viewport) */
+        .flex-container {
+            display: flex;
+            /* justify-content: flex-start; */
+            /* Align content to the left */
+            align-items: stretch;
+            /* Stretch items to fill the container */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .right-grid {
+            flex: 25%;
+            display: flex;
+            flex-direction: column;
+            border-left: 10px solid #ccc;
+            background-color: #f5f5f5;
+        }
+
+        .left-grid {
+            flex: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-grid {
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            border-top: 10px solid #ccc;
+        }
+
+        .bottom-grid {
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            border-top: 10px solid #ccc;
+            border-bottom: 10px solid #ccc;
+            background-color: #f5f5f5;
+        }
+
+        /* Hide the legend when it's not visible */
+        .hidden {
+            display: none;
+        }
+
+        /* Legend Container */
+        .legend-container {
+            /* position: absolute; */
+            top: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Button to toggle the legend */
+        .toggle-btn {
+            /* position: absolute; */
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        /* Checkbox styling */
+        .layer-toggle {
+            margin: 5px;
+        }
+
+        /* Map container (upper-left quadrant) */
+        #mapDiv {
+            height: 100%;
+            /* Ensure the map takes full height of its grid item */
+            width: 100%;
+            /* Ensure the map takes full width of its grid item */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Visualize the History of Jamestown, Virginia</h1>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <div class="flex-buttons">
+                <button id="historical" onclick="navigateTo('index.html')">Historical Maps</button>
+                <button id="modern" onclick="navigateTo('modern.html')">Modern Maps</button>
+                <button id="archeology" onclick="navigateTo('archeology.html')" class="active">Archeology</button>
+                <button id="Flooding" onclick="navigateTo('flood.html')">Flooding</button>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <!-- Left grid (80% width) -->
+            <div class="left-grid">
+                <div class="top-grid">
+                    <!-- Upper-left: Map -->
+                    <div class="grid-item" id="mapDiv"></div>
+                </div>
+                <!-- bottom grid -->
+                <div class="bottom-grid">
+                    <h2>Left Side Content</h2>
+                    <p>Map info</p>
+                </div>
+            </div>
+
+            <!-- Right side content (20% width) -->
+            <div class="right-grid">
+                <div class="top-grid">
+                    <h2>Map Layers</h2>
+                    <!-- Toggle Button for Legend -->
+                    <button class="toggle-btn" onclick="toggleLegend()">Toggle Legend</button>
+                    <!-- Legend Container -->
+                    <div id="legendDiv" class="legend-container hidden"></div>
+                    <!-- Transparency Slider -->
+                    <div class="slider-container">
+                        <label for="transparencySlider">Layer Transparency</label>
+                        <input type="range" id="transparencySlider" class="slider" min="0" max="1" step="0.01"
+                            value="1">
+                        <span id="sliderValue">100%</span>
+                    </div>
+                </div>
+                <!-- Bottom content -->
+                <div class="bottom-grid">
+                    <h2>Attribution</h2>
+                    <p>Info goes here</p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <p>FRCC: GIS 2005 Final GIS Application</p>
+        </div>
+    </div>
+
+    <script>
+        require([
+            "esri/WebMap",
+            "esri/views/MapView",
+            "esri/widgets/Legend",
+            "esri/widgets/FeatureLayer",
+            "esri/yers/TileLayer"
+        ], function (WebMap, MapView, Legend, FeatureLayer, TileLayer) {
+            // Create a WebMap instance using the Web Map ID
+            const webMap = new WebMap({
+                portalItem: {
+                    id: "ff91a98057af4e5a95f4ac0a91146f33" // Replace with your actual Web Map ID
+                }
+            });
+
+            // Create a MapView and display it in the upper-left grid item
+            const mapView = new MapView({
+                container: "mapDiv", // ID of the map's container
+                map: webMap,
+                center: [-76.7591, 37.1994],
+                zoom: 14,
+                padding: { top: 0, bottom: 0, left: 0, right: 0 } // Ensures full use of the container space
+            });
+
+            // Create a Legend widget
+            const legend = new Legend({
+                view: mapView,
+                container: "legendDiv"
+            });
+
+             // Function to toggle the visibility of the legend
+             window.toggleLegend = function() {
+                const legendDiv = document.getElementById("legendDiv");
+                if (legendDiv.classList.contains("hidden")) {
+                    legendDiv.classList.remove("hidden");
+                } else {
+                    legendDiv.classList.add("hidden");
+                }
+            };
+
+            // Function to add layer to the map and generate a checkbox
+            // function addLayer(layer) {
+            //     webMap.map.add(layer); // Add layer to the map
+            //     const layerContainer = document.createElement("div");
+            //     const checkbox = document.createElement("input");
+            //     checkbox.type = "checkbox";
+            //     checkbox.checked = layer.visible;
+            //     checkbox.classList.add("layer-toggle");
+
+            //     const label = document.createElement("label");
+            //     label.textContent = layer.title || "Untitled Layer"; // Fallback for layers without a title
+
+            //     layerContainer.appendChild(checkbox);
+            //     layerContainer.appendChild(label);
+            //     document.getElementById("legendDiv").appendChild(layerContainer);
+
+            //     // Toggle layer visibility when checkbox is clicked
+            //     checkbox.addEventListener("change", function() {
+            //         layer.visible = checkbox.checked;
+            //     });
+            // }
+
+            // // Add feature layers and tile layers to the map
+            // const layer1 = new FeatureLayer({
+            //     url: "https://services.arcgis.com/your-feature-layer-url/0/0" // Replace with your feature layer URL
+            // });
+
+            // const layer2 = new TileLayer({
+            //     url: "https://tiles.arcgis.com/tiles/YseQBnl2jq0lrUV5/arcgis/rest/services/1980_Topographic_Map_WTL1/MapServer" // Replace with your tile layer URL
+            // });
+
+            // // Add layers to the map
+            // addLayer(layer1);
+            // addLayer(layer2);
+
+            // Function to toggle the visibility of the legend
+            window.toggleLegend = function () {
+                const legendDiv = document.getElementById("legendDiv");
+                if (legendDiv.classList.contains("hidden")) {
+                    legendDiv.classList.remove("hidden");
+                } else {
+                    legendDiv.classList.add("hidden");
+                }
+            };
+
+            // Watch for layers being added to the WebMap and generate checkboxes
+            webMap.load().then(function() {
+                const layers = webMap.map.layers.items;
+                const legendDiv = document.getElementById("legendDiv");
+
+                layers.forEach(function(layer) {
+                    // Create a checkbox for each layer in the map
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.classList.add("layer-toggle");
+                    checkbox.checked = layer.visible;
+
+                    // Create a label to show layer name
+                    const label = document.createElement("label");
+                    label.textContent = layer.title;
+
+                    // Append checkbox and label to the legend
+                    const layerContainer = document.createElement("div");
+                    layerContainer.appendChild(checkbox);
+                    layerContainer.appendChild(label);
+                    legendDiv.appendChild(layerContainer);
+
+                    // Toggle layer visibility when checkbox is clicked
+                    checkbox.addEventListener("change", function() {
+                        layer.visible = checkbox.checked;
+                    });
+                });
+            });
+
+            // Slider functionality for controlling layer transparency
+            const transparencySlider = document.getElementById("transparencySlider");
+            const sliderValue = document.getElementById("sliderValue");
+
+            transparencySlider.addEventListener("input", function () {
+                const transparencyValue = transparencySlider.value;
+                sliderValue.textContent = `${(1 - transparencyValue) * 100}%`;
+
+                // Set transparency for each layer
+                webMap.map.layers.items.forEach(function (layer) {
+                    if (layer.setOpacity) {
+                        layer.opacity = transparencyValue;
+                    }
+                });
+            });
+
+            // Initialize transparency for layers
+            webMap.load().then(function () {
+                webMap.map.layers.items.forEach(function (layer) {
+                    if (layer.setOpacity) {
+                        layer.opacity = 1; // Set initial opacity to 100%
+                    }
+                });
+            });
+
+        });
+    </script>
+
+    <!-- Your JavaScript from script.js-->
+    <script src="script.js"></script>
+</body>
+
+</html>

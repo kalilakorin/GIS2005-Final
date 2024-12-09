@@ -10,7 +10,8 @@ html, body, .container {
 
   .header, .footer {
     flex: none;
-    background-color: blue;
+    /* background-color: blue; */
+    background-color: #f5f5f5;
   }
 
   .header {
@@ -65,7 +66,7 @@ html, body, .container {
     align-items: center;
     padding: 10px;
     height: 60px;
-    background-color: cadetblue;
+    background-color: #5f9ea0;
   }
 
   button {
@@ -112,3 +113,9 @@ html, body, .container {
       flex-direction: column;
     }
   }
+
+          /* Map container (upper-left quadrant) */
+          #mapDiv {
+            height: 100%;  /* Ensure the map takes full height of its grid item */
+            width: 100%;   /* Ensure the map takes full width of its grid item */
+        }
